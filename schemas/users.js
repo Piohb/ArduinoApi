@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BasicSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
     uid: {
         type: String,
         required: true
@@ -16,7 +16,11 @@ const BasicSchema = mongoose.Schema({
     isClean: {
         type: Boolean,
         required: true
+    },
+    lastVisit: {
+        type: Date,
+        required: false
     }
 });
 
-module.exports = mongoose.model('BasicObject', BasicSchema);
+module.exports = mongoose.model('User', UserSchema);
