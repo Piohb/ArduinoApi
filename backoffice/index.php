@@ -58,21 +58,33 @@
                 <i class="far fa-minus-square"></i>
             </button>
         </div>
+        <div style="width: 70%; display: flex; justify-content: center; align-items: center;">
+            <h1>Nombre de personnes : <?php $statistics = callWB("http://localhost:3000/users/stats"); echo $statistics['nb_in']; ?></h1>
+        </div>
     </header>
 
     <aside class="aside">
-        <?php
-        $users = callWB("http://localhost:3000/users");
-        if (is_array($users)){
-            foreach ($users as $user){ ?>
+        <div class="users">
+            <?php
+            $users = callWB("http://localhost:3000/users");
+            if (is_array($users)){
+                foreach ($users as $user){ ?>
 
-                <div class="tag <?php if ($user['isHere']){ echo 'in'; } ?>">
-                    <h6><?php echo $user['uid']; ?></h6>
-                    <p><?php echo $user['name']; ?></p>
-                </div>
-        <?php
-            } }
-        ?>
+                    <div class="tag <?php if ($user['isHere']){ echo 'in'; } ?>">
+                        <h6><?php echo $user['uid']; ?></h6>
+                        <p><?php echo $user['name']; ?></p>
+                    </div>
+                    <?php
+                } }
+            ?>
+        </div>
+        <div class="date">
+            <form action="#" id="date">
+                <label for="ondate">Visiteurs présents le :</label>
+                <input type="date" name="ondate" id="ondate">
+                <button type="submit">Rechercher</button>
+            </form>
+        </div>
     </aside>
 
     <main class="main">
@@ -84,6 +96,7 @@
         require("create.html");
         require ("update.php");
         require("delete.php");
+        require ("date.html");
     ?>
 
     <!-- JS -->
@@ -139,6 +152,34 @@
                 document.location.reload();
             });
         }
+
+        $('#date').on('submit', function (e) {
+            e.preventDefault();
+
+            let date = $('#ondate').val();
+            if (date !== ""){
+                $.ajax({
+                    method: "GET",
+                    url: "http://localhost:3000/users/date?date="+date
+
+                }).fail(function(e) {
+                    console.log(e);
+
+                }).done( (data)=> {
+                    console.log(data);
+                    document.querySelector('#date-title').innerHTML = 'Personnes présentes le '+date;
+                    let html = '';
+                    data.forEach( el => {
+                        console.log(el);
+                        html += '<div class="date-user"><h6>'+ el.uid +'</h6><p>'+ el.name+'</p></div>';
+                    });
+
+                    document.querySelector('#date-content').innerHTML = html;
+                    MicroModal.show('date-result');
+                });
+            }
+
+        });
         
         $('#create-form').on('submit', function (e) {
             e.preventDefault();

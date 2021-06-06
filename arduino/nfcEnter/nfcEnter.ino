@@ -1,10 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include <WiFiMulti.h>
 #include <HTTPClient.h>
 #define USE_SERIAL Serial
-
-WiFiMulti wifiMulti;
 
 #include <NfcAdapter.h>
 #include <PN532/PN532/PN532.h>
@@ -40,13 +37,15 @@ void loop(void) {
       NfcTag tag = nfc.read();
       tag.print();
       String uid = tag.getUidString();
-      Serial.println(uid);
-
+      USE_SERIAL.println(uid);
+      uid.replace(" ","");
+     
       HTTPClient http;
-
-      USE_SERIAL.print("[HTTP] begin...\n");
+      
       // configure traged server and url
-      http.begin("http://192.168.43.130:3000/users/" + uid + "/enter"); //HTTP
+      String url = "http://192.168.43.130:3000/users/" + uid + "/enter";
+       USE_SERIAL.print(url);
+      http.begin(url); //HTTP
 
       USE_SERIAL.print("[HTTP] PUT...\n");
       // start connection and send HTTP header
@@ -58,16 +57,12 @@ void loop(void) {
               if(httpCode > 0) {
                   // HTTP header has been send and Server response header has been handled
                   USE_SERIAL.printf("[HTTP] PUT... code: %d\n", httpCode);
-
-                  // file found at server
-                  if(httpCode == HTTP_CODE_OK) {
-                      String payload = http.getString();
-                      USE_SERIAL.println(payload);
-                  }
+                  String payload = http.getString();
+                  USE_SERIAL.println(payload);
               }
               http.end();
 
     }
 
-    delay(1000);
+    delay(3000);
 }

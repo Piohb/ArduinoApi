@@ -20,10 +20,10 @@
                         </select>
 
                         <label for="update-uid">UID</label>
-                        <input type="text" name="uid" id="update-uid">
+                        <input type="text" name="uid" id="update-uid" autocomplete="off">
 
                         <label for="update-name">NOM</label>
-                        <input type="text" name="name" id="update-name">
+                        <input type="text" name="name" id="update-name" autocomplete="off">
                 </main>
                 <footer class="modal__footer">
                     <button class="modal__btn modal__btn-primary" type="submit" id="update-submit">Modifier</button>

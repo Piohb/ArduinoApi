@@ -7,6 +7,9 @@ Notre projet consiste à détecter le nombre de personnes entrantes dans une pi�
 ## ROUTE /users/in (GET)
     get all users currently in the room
 
+## ROUTE /users/stats (GET)
+    get all stats
+
 ## ROUTE /users/:uid (GET)
     get a specific user data
     *need to pass a uid value

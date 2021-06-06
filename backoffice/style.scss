@@ -54,20 +54,39 @@ body {
 .aside {
   width: 30%;
   background-color: cornflowerblue;
-  overflow-y: scroll;
 
-  .tag {
+  .users {
     width: 100%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    background-color: darken(cornflowerblue, 10%);
-    border-bottom: 2px solid white;
+    height: 80%;
+    overflow-y: scroll;
 
-    &.in {
-      background-color: darkseagreen;
+    .tag {
+      width: 100%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-start;
+      background-color: darken(cornflowerblue, 10%);
+      border-bottom: 2px solid white;
+
+      &.in {
+        background-color: darkseagreen;
+      }
+    }
+  }
+
+  .date {
+    width: 100%;
+    height: 20%;
+    background-color: crimson;
+    padding: 25px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
     }
   }
 }
